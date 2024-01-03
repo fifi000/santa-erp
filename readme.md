@@ -2,7 +2,11 @@
 
 ## Description
 
-This is a simple ERP system for **Santa Claus**. It is written in Python 3.12` and uses the **FastAPI** with **SQLite**.
+This is a simple ERP system for **Santa Claus**. It is written in `Python 3.12` and uses the **FastAPI** with **SQLite**.
+
+Deployment is on [🌊 Digital Ocean](https://www.digitalocean.com/) and can be accessed [here](https://lobster-app-c568d.ondigitalocean.app/).
+
+App image is also available on [🐋 Docker Hub](https://hub.docker.com/repository/docker/feefee00/santa-erp/general).
 
 ## Features
 
@@ -38,7 +42,7 @@ Run the container:
 docker-compose up
 ```
 
-No you can access the app at `http://localhost:8000/`
+No you can access the app at `https://localhost:8000/`
 
 
 ## Run without Docker
