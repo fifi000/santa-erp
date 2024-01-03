@@ -1,4 +1,4 @@
-# Santa ERP
+# 🧑‍🎄 Santa ERP
 
 ## Description
 

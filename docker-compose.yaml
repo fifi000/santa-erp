@@ -4,3 +4,5 @@ services:
     build: .
     ports:
       - "8000:8000"
+    environment:
+      - DB_URL=sqlite:///santa_company.db

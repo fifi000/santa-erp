@@ -5,6 +5,8 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
+ENV DB_URL='sqlite:///santa_company.db'
+
 COPY . .
 
 EXPOSE 8000
