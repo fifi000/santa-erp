@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a simple ERP system for **Santa Claus**. It is written in `Python 3.12` and uses the **FastAPI** with **SQLite**.
+This is a simple ERP system for **Santa Claus**. It is written in Python 3.12` and uses the **FastAPI** with **SQLite**.
 
 ## Features
 
@@ -24,9 +24,24 @@ class Item:
     description: str        
 ```
 
+## Run with Docker 🐋
+
+Build the image:
+
+```bash
+docker-compose build
+```
+
+Run the container:
+
+```bash
+docker-compose up
+```
+
+No you can access the app at `http://localhost:8000/`
 
 
-## Installation
+## Run without Docker
 
 App was developed using `Python 3.12`
 
@@ -34,28 +49,28 @@ App was developed using `Python 3.12`
 
 Create a virtual environment with `venv`:
 
-```powershell
-python -m venv ./venv
+```bash
+python -m venv .\.venv
 ```
 
 Activate the virtual environment:
 
 ```bash
+# Linux
 source ./venv/bin/activate
-```
 
-```powershell
+# Windows
 .\.venv\Scripts\activate.ps1
 ```
 
 ### Requirements
 
-```powershell
+```bash
 pip install -r requirements.txt
 ```
 
-## Run
+### Run
 
-```powershell
+```bash
 uvicorn main:app --reload
 ```
