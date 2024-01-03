@@ -1,3 +1,6 @@
+import os
+os.environ['DB_URL'] = 'sqlite:///:memory:'
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine

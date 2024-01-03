@@ -2,9 +2,9 @@ import os
 
 from sqlmodel import SQLModel, Session, create_engine 
 
-conn = os.getenv("DB_URL")
+conn = os.getenv('DB_URL')
 if not conn:
-    raise Exception("`DB_URL` environment variable is not set")
+    raise Exception('`DB_URL` environment variable is not set')
 
 _engine = create_engine(conn)
 
