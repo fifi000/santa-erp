@@ -1,14 +1,19 @@
 from typing import List
 
 from sqlmodel import Session, select
-from fastapi import HTTPException, Depends, Query
+from fastapi import APIRouter, HTTPException, Depends, Query
 
-from .config import app
 from db.config import get_session
-from db.models import Elf, Holiday
+from db.models import Elf, Holiday, Item
 
 
-@app.post('/elves/', response_model=Elf)
+router = APIRouter(
+    prefix='/elves',
+    tags=['elves']
+)
+
+
+@router.post('/', response_model=Elf)
 async def create_elf(*, session: Session = Depends(get_session), elf: Elf):
     db_elf = Elf.model_validate(elf)
     session.add(db_elf)
@@ -17,7 +22,7 @@ async def create_elf(*, session: Session = Depends(get_session), elf: Elf):
     return db_elf
             
 
-@app.get('/elves/', response_model=List[Elf])
+@router.get('/', response_model=List[Elf])
 async def get_elves(
     *,
     session: Session = Depends(get_session),
@@ -28,7 +33,7 @@ async def get_elves(
     return elves
 
 
-@app.get('/elves/{elf_id}', response_model=Elf)
+@router.get('/{elf_id}', response_model=Elf)
 async def get_elf(*, session: Session = Depends(get_session), elf_id: int):
     elf = session.get(Elf, elf_id)
     if not elf:
@@ -36,7 +41,7 @@ async def get_elf(*, session: Session = Depends(get_session), elf_id: int):
     return elf
 
 
-@app.patch('/elves/{elf_id}', response_model=Elf)
+@router.patch('/{elf_id}', response_model=Elf)
 async def update_elf(*, session: Session = Depends(get_session), elf_id: int, elf: Elf):
     db_elf = session.get(Elf, elf_id)
     if not db_elf:
@@ -52,7 +57,7 @@ async def update_elf(*, session: Session = Depends(get_session), elf_id: int, el
     return db_elf
 
 
-@app.delete('/elves/{elf_id}')
+@router.delete('/{elf_id}')
 async def delete_elf(*, session: Session = Depends(get_session), elf_id: int):
     db_elf = session.get(Elf, elf_id)
     if not db_elf:
@@ -63,13 +68,29 @@ async def delete_elf(*, session: Session = Depends(get_session), elf_id: int):
     return {'ok': True}
     
     
-@app.post('/elves/{elf_id}/holiday/', response_model=Elf)
+@router.post('/{elf_id}/holiday/', response_model=Elf)
 async def asign_holiday(*, session: Session = Depends(get_session), elf_id: int, holiday: Holiday):
     db_elf = session.get(Elf, elf_id)
     if not db_elf:
         raise HTTPException(status_code=404, detail='Elf not found')
     
     db_elf.holidays.append(holiday)
+    session.commit()
+    session.refresh(db_elf)
+    return db_elf
+
+
+@router.post('/{elf_id}/items/{item_id}', response_model=Elf)
+async def assign_item(*, session: Session = Depends(get_session), elf_id: int, item_id: int):
+    db_elf = session.get(Elf, elf_id)    
+    if not db_elf:
+        raise HTTPException(status_code=404, detail='Elf not found')
+    
+    db_item = session.get(Item, item_id)
+    if not db_item:
+        raise HTTPException(status_code=404, detail='Item not found')
+    
+    db_elf.items.append(db_item)
     session.commit()
     session.refresh(db_elf)
     return db_elf

@@ -1,14 +1,19 @@
 from typing import List
 
 from sqlmodel import Session, select
-from fastapi import HTTPException, Depends, Query
+from fastapi import APIRouter, HTTPException, Depends, Query
 
-from .config import app
-from db.models import Elf, Item
+from db.models import Item
 from db.config import get_session
 
 
-@app.post('/items/', response_model=Item, )
+router = APIRouter(
+    prefix='/items',
+    tags=['items']
+)
+
+
+@router.post('/', response_model=Item, )
 async def create_item(*, session: Session = Depends(get_session), item: Item):
     db_item = Item.model_validate(item)
 
@@ -18,7 +23,7 @@ async def create_item(*, session: Session = Depends(get_session), item: Item):
     return db_item
 
 
-@app.get('/items/', response_model=List[Item])
+@router.get('/', response_model=List[Item])
 async def get_items(
     *,
     session: Session = Depends(get_session),
@@ -29,7 +34,7 @@ async def get_items(
     return items
 
 
-@app.get('/items/{item_id}', response_model=Item)
+@router.get('/{item_id}', response_model=Item)
 async def get_item(*, session: Session = Depends(get_session), item_id: int):
     db_item = session.get(Item, item_id)
     if not db_item:
@@ -38,7 +43,7 @@ async def get_item(*, session: Session = Depends(get_session), item_id: int):
     return db_item
 
 
-@app.patch('/items/{item_id}', response_model=Item)
+@router.patch('/{item_id}', response_model=Item)
 async def update_item(*, session: Session = Depends(get_session), item_id: int, item: Item):
     db_item = session.get(Item, item_id)
     if not db_item:
@@ -54,7 +59,7 @@ async def update_item(*, session: Session = Depends(get_session), item_id: int, 
     return db_item  
 
 
-@app.delete('/items/{item_id}', response_model=Item)
+@router.delete('/{item_id}', response_model=Item)
 async def delete_item(*, session: Session = Depends(get_session), item_id: int):
     db_item = session.get(Item, item_id)
     if not db_item:
@@ -64,18 +69,3 @@ async def delete_item(*, session: Session = Depends(get_session), item_id: int):
     session.commit()
     return {'ok': True}
 
-
-@app.post('/elves/{elf_id}/items/{item_id}', response_model=Elf)
-async def assign_item(*, session: Session = Depends(get_session), elf_id: int, item_id: int):
-    db_elf = session.get(Elf, elf_id)    
-    if not db_elf:
-        raise HTTPException(status_code=404, detail='Elf not found')
-    
-    db_item = session.get(Item, item_id)
-    if not db_item:
-        raise HTTPException(status_code=404, detail='Item not found')
-    
-    db_elf.items.append(db_item)
-    session.commit()
-    session.refresh(db_elf)
-    return db_elf

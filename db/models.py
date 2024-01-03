@@ -1,5 +1,5 @@
 from enum import Enum
-from datetime import datetime
+from datetime import date
 from typing import List, Optional
 
 from sqlmodel import SQLModel, Field, Relationship
@@ -24,8 +24,8 @@ class Item(SQLModel, table=True):
 
 class Holiday(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    start_date: datetime = Field(default=None)
-    end_date: datetime = Field(default=None)
+    start_date: date = Field(default=None)
+    end_date: date = Field(default=None)
     type: HolidayType = Field(default=None)
     description: Optional[str] = Field(default=None)
 

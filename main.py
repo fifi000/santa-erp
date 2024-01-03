@@ -1,2 +1,2 @@
-from routers.config import app
+from api.config import app
 
