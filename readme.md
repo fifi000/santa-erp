@@ -4,6 +4,8 @@
 
 This is a simple ERP system for **Santa Claus**. It is written in `Python 3.12` and uses the **FastAPI** with **SQLite**.
 
+**API documentation** is available at `/docs` endpoint.
+
 ## Deployment
 
 App is running on [🌊 Digital Ocean](https://www.digitalocean.com/) and can be accessed [here](https://lobster-app-c568d.ondigitalocean.app/).
