@@ -1,12 +1,21 @@
-# 🧑‍🎄 Santa ERP
+# 🧑‍🎄 Santa's ERP
 
 ## Description
 
 This is a simple ERP system for **Santa Claus**. It is written in `Python 3.12` and uses the **FastAPI** with **SQLite**.
 
-Deployment is on [🌊 Digital Ocean](https://www.digitalocean.com/) and can be accessed [here](https://lobster-app-c568d.ondigitalocean.app/).
+## Deployment
 
-App image is also available on [🐋 Docker Hub](https://hub.docker.com/repository/docker/feefee00/santa-erp/general).
+App is running on [🌊 Digital Ocean](https://www.digitalocean.com/) and can be accessed [here](https://lobster-app-c568d.ondigitalocean.app/).
+
+Docker Image is also available on [🐋 DockerHub](https://hub.docker.com/repository/docker/feefee00/santa-erp/general).
+
+## GitHub Actions
+
+Currently there are two GitHub Actions workflows:
+
+- `python-app.yml` - runs tests and lints the code
+- `docker-image.yml` - builds and pushes the Docker image to DockerHub with the `latest` tag
 
 ## Features
 
@@ -42,6 +51,7 @@ class Item:
     id: int
     description: str        
 ```
+
 
 ## Run with Docker 🐋
 
