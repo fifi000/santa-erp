@@ -12,6 +12,21 @@ App image is also available on [🐋 Docker Hub](https://hub.docker.com/reposito
 
 Santa can perform the standard CRUD operations both on Elves and Items. He can also assign both Items and Holidays to Elves.
 
+### Authentication
+
+User can sign-up and sign-in. Passwords are hashed using `bcrypt`.
+
+In order to register use `/auth/register` endpoint with `POST` method and provide `username` and `password` in the request body.
+
+Remember your `username` and `password` as you will need them to get `JWT token`.
+
+With the `JWT token` you are empowered, like Frodo with the **One Ring** to rule them all, so act wisely. Now you can access additionally:
+
+- `/auth/users/me` - get your user info
+- `/auth/time` - get current time
+
+Be aware that `JWT token` expires after 30 minutes.
+
 ## Models
 
 ``` python
