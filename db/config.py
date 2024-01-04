@@ -1,6 +1,13 @@
+try:
+    import dotenv
+    dotenv.load_dotenv()
+except ImportError:
+    pass
+
 import os
 
-from sqlmodel import SQLModel, Session, create_engine 
+from sqlmodel import SQLModel, Session, create_engine
+
 
 conn = os.getenv('DB_URL')
 if not conn:
